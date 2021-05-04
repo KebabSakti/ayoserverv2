@@ -21,7 +21,7 @@ class CreateCustomersTable extends Migration
             $table->text('customer_password');
             $table->text('customer_fcm');
             $table->boolean('customer_is_guest')->default(1);
-            $table->int('customer_point')->default(0);
+            $table->integer('customer_point')->default(0);
             $table->boolean('customer_is_active')->default(1);
             $table->timestamps();
         });

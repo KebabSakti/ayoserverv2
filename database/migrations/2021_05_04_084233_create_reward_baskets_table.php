@@ -18,8 +18,8 @@ class CreateRewardBasketsTable extends Migration
             $table->string('order_id');
             $table->string('product_reward_id');
             $table->string('reward_basket_id');
-            $table->int('reward_basket_qty');
-            $table->int('reward_basket_price');
+            $table->integer('reward_basket_qty');
+            $table->integer('reward_basket_price');
             $table->timestamps();
         });
     }

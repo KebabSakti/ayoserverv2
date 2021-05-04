@@ -17,12 +17,12 @@ class CreateRatingWeightProductsTable extends Migration
             $table->string('customer_id');
             $table->string('product_id');
             $table->string('rating_weight_product_id');
-            $table->int('rating_weight_product_one')->default(0);
-            $table->int('rating_weight_product_two')->default(0);
-            $table->int('rating_weight_product_three')->default(0);
-            $table->int('rating_weight_product_four')->default(0);
-            $table->int('rating_weight_product_five')->default(0);
-            $table->int('rating_weight_product_count')->default(0);
+            $table->integer('rating_weight_product_one')->default(0);
+            $table->integer('rating_weight_product_two')->default(0);
+            $table->integer('rating_weight_product_three')->default(0);
+            $table->integer('rating_weight_product_four')->default(0);
+            $table->integer('rating_weight_product_five')->default(0);
+            $table->integer('rating_weight_product_count')->default(0);
             $table->decimal('rating_weight_product_value')->default(0);
             $table->timestamps();
         });

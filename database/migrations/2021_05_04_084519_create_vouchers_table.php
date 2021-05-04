@@ -21,7 +21,7 @@ class CreateVouchersTable extends Migration
             $table->text('voucher_description')->nullable();
             $table->dateTime('voucher_start');
             $table->dateTime('voucher_end');
-            $table->int('voucher_limit')->nullable();
+            $table->integer('voucher_limit')->nullable();
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@ class CreateCartsTable extends Migration
             $table->string('customer_id');
             $table->string('cart_id');
             $table->text('cart_invoice');
-            $table->int('cart_qty_total');
+            $table->integer('cart_qty_total');
             $table->decimal('cart_price_total');
             $table->timestamps();
         });

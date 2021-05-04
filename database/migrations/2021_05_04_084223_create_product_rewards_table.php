@@ -21,8 +21,8 @@ class CreateProductRewardsTable extends Migration
             $table->text('product_reward_name');
             $table->text('product_reward_description');
             $table->text('product_reward_cover');
-            $table->int('product_reward_price');
-            $table->int('product_reward_stock');
+            $table->integer('product_reward_price');
+            $table->integer('product_reward_stock');
             $table->boolean('product_reward_is_active')->default(0);
             $table->timestamps();
         });

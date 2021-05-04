@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->string('courier_id');
             $table->string('order_id');
             $table->text('order_invoice');
-            $table->int('order_qty_total');
+            $table->integer('order_qty_total');
             $table->decimal('order_price_total');
             $table->string('voucher_id')->nullable();
             $table->decimal('voucher_amount')->nullable();
@@ -36,7 +36,7 @@ class CreateOrdersTable extends Migration
             $table->text('order_shipping_longitude');
             $table->text('order_shipping_fee');
             $table->decimal('order_shipping_distance')->nullable();
-            $table->int('order_shipping_duration')->nullable();
+            $table->integer('order_shipping_duration')->nullable();
             $table->text('order_shipping_note')->nullable();
             $table->decimal('order_pay_total');
             $table->timestamps();

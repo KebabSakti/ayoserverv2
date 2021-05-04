@@ -18,7 +18,7 @@ class CreateCartItemsTable extends Migration
             $table->string('customer_id');
             $table->string('cart_item_id');
             $table->text('cart_item_note');
-            $table->int('cart_item_qty');
+            $table->integer('cart_item_qty');
             $table->decimal('cart_item_price');
             $table->boolean('cart_item_checked')->nullable();
             $table->timestamps();

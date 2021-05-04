@@ -17,7 +17,7 @@ class CreateProductSearchesTable extends Migration
             $table->string('product_id');
             $table->string('product_search_id');
             $table->text('product_search_keyword');
-            $table->int('product_search_count');
+            $table->integer('product_search_count');
             $table->timestamps();
         });
     }

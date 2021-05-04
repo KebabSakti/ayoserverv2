@@ -17,12 +17,12 @@ class CreateRatingWeightCouriersTable extends Migration
             $table->string('customer_id');
             $table->string('courier_id');
             $table->string('rating_weight_courier_id');
-            $table->int('rating_weight_courier_one')->default(0);
-            $table->int('rating_weight_courier_two')->default(0);
-            $table->int('rating_weight_courier_three')->default(0);
-            $table->int('rating_weight_courier_four')->default(0);
-            $table->int('rating_weight_courier_five')->default(0);
-            $table->int('rating_weight_courier_count')->default(0);
+            $table->integer('rating_weight_courier_one')->default(0);
+            $table->integer('rating_weight_courier_two')->default(0);
+            $table->integer('rating_weight_courier_three')->default(0);
+            $table->integer('rating_weight_courier_four')->default(0);
+            $table->integer('rating_weight_courier_five')->default(0);
+            $table->integer('rating_weight_courier_count')->default(0);
             $table->decimal('rating_weight_courier_value')->default(0);
             $table->timestamps();
         });

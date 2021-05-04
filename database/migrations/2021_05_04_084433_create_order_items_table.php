@@ -18,7 +18,7 @@ class CreateOrderItemsTable extends Migration
             $table->string('order_item_id');
             $table->string('order_customer');
             $table->text('order_item_note');
-            $table->int('order_item_qty');
+            $table->integer('order_item_qty');
             $table->decimal('order_item_price');
             $table->timestamps();
         });

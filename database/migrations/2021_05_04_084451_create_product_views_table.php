@@ -17,7 +17,7 @@ class CreateProductViewsTable extends Migration
             $table->string('customer_id');
             $table->string('product_id');
             $table->string('product_view_id');
-            $table->int('product_view_count');
+            $table->integer('product_view_count');
             $table->timestamps();
         });
     }

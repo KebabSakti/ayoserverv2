@@ -24,11 +24,11 @@ class CreateProductsTable extends Migration
             $table->text('product_description');
             $table->text('product_cover');
             $table->decimal('product_price');
-            $table->int('product_point')->default(0);
-            $table->int('product_view')->default(0);
-            $table->int('product_sold')->default(0);
-            $table->int('product_search')->default(0);
-            $table->int('product_rating_count')->nullable();
+            $table->integer('product_point')->default(0);
+            $table->integer('product_view')->default(0);
+            $table->integer('product_sold')->default(0);
+            $table->integer('product_search')->default(0);
+            $table->integer('product_rating_count')->nullable();
             $table->decimal('product_rating_value')->nullable();
             $table->boolean('product_active')->default(1);
             $table->timestamps();
