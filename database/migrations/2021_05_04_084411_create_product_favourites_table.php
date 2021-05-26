@@ -14,6 +14,7 @@ class CreateProductFavouritesTable extends Migration
     public function up()
     {
         Schema::create('product_favourites', function (Blueprint $table) {
+            $table->id();
             $table->string('cutomer_id');
             $table->string('product_id');
             $table->string('product_favourites_id');

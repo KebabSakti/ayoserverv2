@@ -14,6 +14,7 @@ class CreateBannerSecondariesTable extends Migration
     public function up()
     {
         Schema::create('banner_secondaries', function (Blueprint $table) {
+            $table->id();
             $table->string('category_id');
             $table->string('banner_secondary_id');
             $table->text('banner_secondary_image');

@@ -14,6 +14,7 @@ class CreatePlaceSuggestionsTable extends Migration
     public function up()
     {
         Schema::create('place_suggestions', function (Blueprint $table) {
+            $table->id();
             $table->string('place_suggestion_id');
             $table->text('place_suggestion_place_id');
             $table->text('place_suggestion_latitude');

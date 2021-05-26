@@ -14,6 +14,7 @@ class CreateProductViewsTable extends Migration
     public function up()
     {
         Schema::create('product_views', function (Blueprint $table) {
+            $table->id();
             $table->string('customer_id');
             $table->string('product_id');
             $table->string('product_view_id');

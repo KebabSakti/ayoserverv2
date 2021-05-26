@@ -14,6 +14,7 @@ class CreateRatingWeightCouriersTable extends Migration
     public function up()
     {
         Schema::create('rating_weight_couriers', function (Blueprint $table) {
+            $table->id();
             $table->string('customer_id');
             $table->string('courier_id');
             $table->string('rating_weight_courier_id');

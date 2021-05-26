@@ -14,7 +14,8 @@ class CreateCartItemsTable extends Migration
     public function up()
     {
         Schema::create('cart_items', function (Blueprint $table) {
-            $table->string('cart_item');
+            $table->id();
+            $table->string('cart_id');
             $table->string('customer_id');
             $table->string('cart_item_id');
             $table->text('cart_item_note');

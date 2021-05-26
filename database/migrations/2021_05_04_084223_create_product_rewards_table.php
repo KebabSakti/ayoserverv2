@@ -14,6 +14,7 @@ class CreateProductRewardsTable extends Migration
     public function up()
     {
         Schema::create('product_rewards', function (Blueprint $table) {
+            $table->id();
             $table->string('product_reward_id');
             $table->boolean('product_reward_is_exclusive')->default(0);
             $table->enum('product_reward_delivery_type', ['INSTANT', 'TERJADWAL']);

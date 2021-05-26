@@ -14,6 +14,7 @@ class CreateCourierActionsTable extends Migration
     public function up()
     {
         Schema::create('courier_actions', function (Blueprint $table) {
+            $table->id();
             $table->string('order_id');
             $table->string('courier_id');
             $table->string('customer_id');

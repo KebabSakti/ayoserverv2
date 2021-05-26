@@ -14,6 +14,7 @@ class CreateCustomerMailboxesTable extends Migration
     public function up()
     {
         Schema::create('customer_mailboxes', function (Blueprint $table) {
+            $table->id();
             $table->string('customer_mailbox_id');
             $table->text('customer_mailbox_title');
             $table->text('customer_mailbox_description');

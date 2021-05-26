@@ -14,6 +14,7 @@ class CreateCustomerPointsTable extends Migration
     public function up()
     {
         Schema::create('customer_points', function (Blueprint $table) {
+            $table->id();
             $table->string('customer_id');
             $table->string('customer_point_id');
             $table->integer('customer_point_acquired');

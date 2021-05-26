@@ -14,6 +14,7 @@ class CreateMitrasTable extends Migration
     public function up()
     {
         Schema::create('mitras', function (Blueprint $table) {
+            $table->id();
             $table->string('mitra_id');
             $table->enum('mitra_delivery_type', ['INSTANT', 'TERJADWAL']);
             $table->boolean('mitra_is_exclusive')->default(0);
@@ -23,8 +24,8 @@ class CreateMitrasTable extends Migration
             $table->string('mitra_phone');
             $table->text('mitra_latitude');
             $table->text('mitra_longitude');
-            $table->timestamp('mitra_working_start');
-            $table->timestamp('mitra_working_end');
+            $table->time('mitra_working_start');
+            $table->time('mitra_working_end');
             $table->enum('mitra_status', ['Online', 'Offline', 'Busy', 'Working']);
             $table->timestamps();
         });

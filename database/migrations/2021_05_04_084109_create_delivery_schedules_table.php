@@ -14,6 +14,7 @@ class CreateDeliverySchedulesTable extends Migration
     public function up()
     {
         Schema::create('delivery_schedules', function (Blueprint $table) {
+            $table->id();
             $table->string('delivery_schedule_id');
             $table->timestamp('delivery_schedule_start');
             $table->timestamp('delivery_schedule_end');

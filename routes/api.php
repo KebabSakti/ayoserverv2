@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+//CUSTOMER API
+Route::prefix('customer')->group(function () {
+    Route::get('/phone/{phone}', [App\Http\Controllers\Customer\UtilityController::class, 'phone']);
+
+    Route::prefix('auth')->group(function () {
+        Route::post('/register', [App\Http\Controllers\Customer\AuthController::class, 'register']);
+        Route::post('/user', [App\Http\Controllers\Customer\AuthController::class, 'user']);
+        Route::middleware('auth:sanctum')->post('/revoke', [App\Http\Controllers\Customer\AuthController::class, 'revoke']);
+    });
+
+    Route::middleware('auth:sanctum')->group(function () {
+        //
+    });
 });

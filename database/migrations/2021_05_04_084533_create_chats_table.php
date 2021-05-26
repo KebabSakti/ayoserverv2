@@ -14,6 +14,7 @@ class CreateChatsTable extends Migration
     public function up()
     {
         Schema::create('chats', function (Blueprint $table) {
+            $table->id();
             $table->string('order_id');
             $table->string('customer_id');
             $table->string('courier_id');

@@ -14,6 +14,7 @@ class CreateProductSearchesTable extends Migration
     public function up()
     {
         Schema::create('product_searches', function (Blueprint $table) {
+            $table->id();
             $table->string('product_id');
             $table->string('product_search_id');
             $table->text('product_search_keyword');

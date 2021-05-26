@@ -14,6 +14,7 @@ class CreateRewardBasketsTable extends Migration
     public function up()
     {
         Schema::create('reward_baskets', function (Blueprint $table) {
+            $table->id();
             $table->string('customer_id');
             $table->string('order_id');
             $table->string('product_reward_id');

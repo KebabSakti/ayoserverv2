@@ -14,6 +14,7 @@ class CreateVoucherHistoriesTable extends Migration
     public function up()
     {
         Schema::create('voucher_histories', function (Blueprint $table) {
+            $table->id();
             $table->string('voucher_id');
             $table->string('customer_id');
             $table->string('order_id');

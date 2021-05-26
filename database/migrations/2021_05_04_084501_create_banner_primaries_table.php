@@ -14,6 +14,7 @@ class CreateBannerPrimariesTable extends Migration
     public function up()
     {
         Schema::create('banner_primaries', function (Blueprint $table) {
+            $table->id();
             $table->string('banner_primary_id');
             $table->text('banner_primary_image');
             $table->text('banner_primary_link')->nullable();

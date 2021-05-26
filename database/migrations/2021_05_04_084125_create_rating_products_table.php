@@ -14,6 +14,7 @@ class CreateRatingProductsTable extends Migration
     public function up()
     {
         Schema::create('rating_products', function (Blueprint $table) {
+            $table->id();
             $table->string('customer_id');
             $table->string('product_id');
             $table->string('rating_product_id');
