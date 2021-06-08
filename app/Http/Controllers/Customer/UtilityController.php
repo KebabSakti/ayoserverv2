@@ -3,19 +3,27 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UtilityController extends Controller
 {
-    public function phone($phone)
+    public function exist(Request $request)
     {
-        $user = \App\Models\Customer::where('customer_phone', $phone)->first();
+        $validator = Validator::make($request->all(), [
+            'customer_id' => 'unique:customers',
+            'customer_phone' => 'unique:customers',
+            'customer_email' => 'unique:customers',
+        ]);
 
-        if(!$user) {
-            return response()->json([
-                'success' => false,
-                'message' => 'No hp tidak terdaftar',
-                'data' => null
-            ], 200);
+        if($validator->fails()) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => $validator->errors()->first(),
+                    'data' => null,
+                ]
+            );
         }
 
         return response()->json([

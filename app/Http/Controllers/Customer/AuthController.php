@@ -11,51 +11,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function __construct()
     {
-            DB::beginTransaction();
-
-            $validator = Validator::make($request->all(), [
-                'customer_id' => 'required|unique:customers',
-            ]);
-
-            if($validator->fails()) {
-                DB::rollBack();
-
-                return response()->json(
-                    [
-                        'success' => false,
-                        'message' => $validator->errors()->first(),
-                        'data' => null,
-                    ]
-                );
-            }
-
-            $user = Customer::create([
-                'customer_id' => $request->customer_id,
-                'customer_phone' => $request->customer_phone,
-                'customer_name' => $request->customer_name,
-                'customer_email' => $request->customer_email,
-                'customer_password' => Hash::make($request->customer_password),
-                'customer_fcm' => $request->customer_fcm,
-            ]);
-
-            $token = $user->createToken($request->customer_id)->plainTextToken;
-
-            $user->token = $token;
-
-            DB::commit();
-        
-            return response()->json(
-                [
-                    'success' => true,
-                    'message' => '',
-                    'data' => $user
-                ]
-            );
+        $this->middleware('auth:sanctum')->except(['authenticate', 'exist']);
     }
 
-    public function user(Request $request) 
+    public function authenticate(Request $request) 
     {
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
@@ -71,29 +32,103 @@ class AuthController extends Controller
             );
         }
 
-        $user = Customer::where('customer_id', $request->customer_id)->first();
+        $customer = Customer::firstOrCreate(
+            ['customer_id' => $request->customer_id],
+            [
+                'customer_phone' => $request->customer_phone,
+                'customer_name' => $request->customer_name,
+                'customer_email' => $request->customer_email,
+                'customer_password' => Hash::make($request->customer_password),
+                'customer_fcm' => $request->customer_fcm
+            ]
+        );
 
-        if (empty($user)) {
-            return response()->json(
-                [
-                    'success' => false,
-                    'message' => 'User tidak ditemukan',
-                    'data' => null,
-                ]
-            );
-        }
+        $token = $customer->createToken($request->customer_id)->plainTextToken;
 
-        $token = $user->createToken($request->customer_id)->plainTextToken;
-
-        $user->token = $token;
+        $customer->token = $token;
 
         return response()->json(
             [
                 'success' => true,
                 'message' => '',
-                'data' => $user,
+                'data' => $customer
             ]
         );
+    }
+
+    public function update(Request $request)
+    {
+            DB::beginTransaction();
+
+            $validator = Validator::make($request->all(), [
+                'customer_id' => 'required',
+            ]);
+
+            if($validator->fails()) {
+                DB::rollBack();
+
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => $validator->errors()->first(),
+                        'data' => null,
+                    ]
+                );
+            }
+
+            $user = Customer::where('customer_id', $request->customer_id)->first();
+
+            if (empty($user)) {
+                DB::rollBack();
+
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'User tidak ditemukan',
+                        'data' => null,
+                    ]
+                );
+            }
+
+            if(!empty($request->customer_phone)) {
+                $user->customer_phone = $request->customer_phone;
+            }
+
+            if(!empty($request->customer_name)) {
+                $user->customer_name = $request->customer_name;
+            }
+
+            if(!empty($request->customer_email)) {
+                $user->customer_email = $request->customer_email;
+            }
+
+            if(!empty($request->customer_password)) {
+                $user->customer_password = $request->customer_password;
+            }
+
+            if(!empty($request->customer_fcm)) {
+                $user->customer_fcm = $request->customer_fcm;
+            }
+
+            if(!empty($request->customer_point)) {
+                $user->customer_point = $request->customer_point;
+            }
+
+            $user->save();
+
+            $token = $user->createToken($request->customer_id)->plainTextToken;
+
+            $user->token = $token;
+
+            DB::commit();
+        
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => '',
+                    'data' => $user
+                ]
+            );
     }
 
     public function revoke(Request $request)
@@ -123,5 +158,30 @@ class AuthController extends Controller
                 'data' => null,
             ]
         );
+    }
+
+    public function exist(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'customer_id' => 'unique:customers',
+            'customer_phone' => 'unique:customers',
+            'customer_email' => 'unique:customers',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => $validator->errors()->first(),
+                    'data' => null,
+                ]
+            );
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => '',
+            'data' => null
+        ]);
     }
 }
