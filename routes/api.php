@@ -26,13 +26,16 @@ Route::prefix('customer')->group(function () {
     
     //MOBILE PAGE
     Route::prefix('page')->group(function() {
+        Route::get('intro', [App\Http\Controllers\Customer\MobilePageController::class, 'intro']);
         Route::get('home', [App\Http\Controllers\Customer\MobilePageController::class, 'home']);
         Route::get('search', [App\Http\Controllers\Customer\MobilePageController::class, 'search']);
+        Route::get('product/{id}', [App\Http\Controllers\Customer\MobilePageController::class, 'product']);
     });
 
     Route::prefix('domain')->group(function() {
         Route::post('product', [App\Http\Controllers\Customer\ProductController::class, 'product']);
         Route::post('product/total', [App\Http\Controllers\Customer\ProductController::class, 'productTotal']);
+        Route::post('product/favourite', [App\Http\Controllers\Customer\ProductController::class, 'productFavourite']);
         Route::post('search', [App\Http\Controllers\Customer\SearchController::class, 'search']);
     });
 });

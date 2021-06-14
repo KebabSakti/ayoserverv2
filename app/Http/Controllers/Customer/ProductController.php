@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 use App\Models\Product;
+use App\Models\ProductFavourite;
 
 class ProductController extends Controller
 {
@@ -153,6 +156,40 @@ class ProductController extends Controller
         //=======================================================SORTING END
 
         $product = $query->get();
+
+        return response()->json(
+            [
+                'success' => true,
+                'message' => '',
+                'data' => $product,
+            ]
+        );
+    }
+
+    public function productFavourite(Request $request)
+    {
+        $favourite = ProductFavourite::where('customer_id', Auth::user()->customer_id)
+                                    ->where('product_id', $request->product_id)
+                                    ->first();
+
+        $product = Product::where('product_id', $request->product_id)->first();
+        
+        if(empty($favourite)) {
+            //insert
+            ProductFavourite::create([
+                'customer_id' => Auth::user()->customer_id,
+                'product_id' => $request->product_id,
+                'product_favourites_id' => Str::uuid()
+            ]);
+
+            $product->product_favourite = 1;
+
+        }else{
+            //delete
+            $favourite->delete();
+
+            $product->product_favourite = 0;
+        }
 
         return response()->json(
             [
