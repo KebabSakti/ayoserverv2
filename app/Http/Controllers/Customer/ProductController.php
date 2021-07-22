@@ -169,8 +169,8 @@ class ProductController extends Controller
     public function productFavourite(Request $request)
     {
         $favourite = ProductFavourite::where('customer_id', Auth::user()->customer_id)
-                                    ->where('product_id', $request->product_id)
-                                    ->first();
+                                     ->where('product_id', $request->product_id)
+                                     ->first();
 
         $product = Product::where('product_id', $request->product_id)->first();
         

@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 //CUSTOMER API
 Route::prefix('customer')->group(function () {
     //AUTH
@@ -37,5 +36,7 @@ Route::prefix('customer')->group(function () {
         Route::post('product/total', [App\Http\Controllers\Customer\ProductController::class, 'productTotal']);
         Route::post('product/favourite', [App\Http\Controllers\Customer\ProductController::class, 'productFavourite']);
         Route::post('search', [App\Http\Controllers\Customer\SearchController::class, 'search']);
+        Route::post('cart', [App\Http\Controllers\Customer\CartController::class, 'cart']);
+        Route::post('cart/update', [App\Http\Controllers\Customer\CartController::class, 'cartUpdate']);
     });
 });
