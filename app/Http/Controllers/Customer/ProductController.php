@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 use App\Models\Product;
 use App\Models\ProductFavourite;
+use App\Models\ProductBundle;
+use App\Models\Bundle;
 
 class ProductController extends Controller
 {
@@ -22,64 +24,80 @@ class ProductController extends Controller
         $query = Product::where('product_active', 1);
 
         //=======================================================FILTER START
-        if(!empty($request->delivery_type)) {
+        if (!empty($request->delivery_type)) {
             $query->where('product_delivery_type', $request->delivery_type);
         }
 
-        if(!empty($request->category)) {
+        if (!empty($request->category)) {
             $query->where('category_id', $request->category);
         }
 
-        if(!empty($request->sub_category)) {
+        if (!empty($request->sub_category)) {
             $query->where('sub_category_id', $request->sub_category);
         }
 
-        if(!empty($request->product_id)) {
+        if (!empty($request->product_id)) {
             $query->where('product_id', $request->product_id);
         }
 
-        if(!empty($request->keyword)) {
-            $query->where('product_name', 'like', '%'.$request->keyword.'%');
+        if (!empty($request->keyword)) {
+            $query->where('product_name', 'like', '%' . $request->keyword . '%');
         }
 
-        if(!empty($request->high_rating_value)) {
+        if (!empty($request->high_rating_value)) {
             $query->where('product_rating_value', '>=', 4.0)
-                  ->reorder('product_rating_value', 'desc');
+                ->reorder('product_rating_value', 'desc');
         }
 
-        if(!empty($request->discount)) {
+        if (!empty($request->discount)) {
             $query->where('product_discount', '>', 0)
-                  ->reorder('product_discount', 'desc');
+                ->reorder('product_discount', 'desc');
         }
 
-        if(!empty($request->high_point)) {
+        if (!empty($request->high_point)) {
             $query->where('product_point', '>', 0)
-                  ->reorder('product_point', 'desc');
+                ->reorder('product_point', 'desc');
         }
 
-        if(!empty($request->high_view)) {
+        if (!empty($request->high_view)) {
             $query->where('product_view', '>', 0)
-                  ->reorder('product_view', 'desc');
+                ->reorder('product_view', 'desc');
         }
 
-        if(!empty($request->high_sell)) {
+        if (!empty($request->high_sell)) {
             $query->where('product_sold', '>', 0)
-                  ->reorder('product_sold', 'desc');
+                ->reorder('product_sold', 'desc');
         }
 
-        if(!empty($request->hight_rating_count)) {
+        if (!empty($request->hight_rating_count)) {
             $query->where('product_rating_count', '>', 0)
-                  ->reorder('product_rating_count', 'desc');
+                ->reorder('product_rating_count', 'desc');
         }
 
-        if(!empty($request->high_search)) {
+        if (!empty($request->high_search)) {
             $query->where('product_search', '>', 0)
-                  ->reorder('product_search', 'desc');
+                ->reorder('product_search', 'desc');
+        }
+
+        if (!empty($request->product_tag)) {
+            $query->where('product_tag', $request->product_tag);
+        }
+
+        if (!empty($request->product_bundle_id)) {
+            $bundle = Bundle::where('bundle_id', $request->product_bundle_id)->first();
+
+            if ($bundle != null) {
+                $bundles = ProductBundle::where('bundle_id', $bundle->bundle_id)->get()->map(function ($item, $key) {
+                    return $item->product_id;
+                })->toArray();
+
+                $query->whereIn('product_id', $bundles);
+            }
         }
         //=======================================================FILTER END
 
         //=======================================================SORTING START
-        if(!empty($request->product_price)) {
+        if (!empty($request->product_price)) {
             $query->reorder('product_final_price', $request->product_price);
         }
         //=======================================================SORTING END
@@ -100,57 +118,57 @@ class ProductController extends Controller
         $query = Product::where('product_active', 1);
 
         //=======================================================FILTER START
-        if(!empty($request->delivery_type)) {
+        if (!empty($request->delivery_type)) {
             $query->where('product_delivery_type', $request->delivery_type);
         }
 
-        if(!empty($request->category)) {
+        if (!empty($request->category)) {
             $query->where('category_id', $request->category);
         }
 
-        if(!empty($request->sub_category)) {
+        if (!empty($request->sub_category)) {
             $query->where('sub_category_id', $request->sub_category);
         }
 
-        if(!empty($request->product_id)) {
+        if (!empty($request->product_id)) {
             $query->where('product_id', $request->product_id);
         }
 
-        if(!empty($request->keyword)) {
-            $query->where('product_name', 'like', '%'.$request->keyword.'%');
+        if (!empty($request->keyword)) {
+            $query->where('product_name', 'like', '%' . $request->keyword . '%');
         }
 
-        if(!empty($request->high_rating_value)) {
+        if (!empty($request->high_rating_value)) {
             $query->where('product_rating_value', '>=', 4.0);
         }
 
-        if(!empty($request->discount)) {
+        if (!empty($request->discount)) {
             $query->where('product_discount', '>', 0);
         }
 
-        if(!empty($request->high_point)) {
+        if (!empty($request->high_point)) {
             $query->where('product_point', '>', 0);
         }
 
-        if(!empty($request->high_view)) {
+        if (!empty($request->high_view)) {
             $query->where('product_view', '>', 0);
         }
 
-        if(!empty($request->high_sell)) {
+        if (!empty($request->high_sell)) {
             $query->where('product_sold', '>', 0);
         }
 
-        if(!empty($request->hight_rating_count)) {
+        if (!empty($request->hight_rating_count)) {
             $query->where('product_rating_count', '>', 0);
         }
 
-        if(!empty($request->high_search)) {
+        if (!empty($request->high_search)) {
             $query->where('product_search', '>', 0);
         }
         //=======================================================FILTER END
 
         //=======================================================SORTING START
-        if(!empty($request->product_price)) {
+        if (!empty($request->product_price)) {
             $query->reorder('product_final_price', $request->product_price);
         }
         //=======================================================SORTING END
@@ -169,12 +187,12 @@ class ProductController extends Controller
     public function productFavourite(Request $request)
     {
         $favourite = ProductFavourite::where('customer_id', Auth::user()->customer_id)
-                                     ->where('product_id', $request->product_id)
-                                     ->first();
+            ->where('product_id', $request->product_id)
+            ->first();
 
         $product = Product::where('product_id', $request->product_id)->first();
-        
-        if(empty($favourite)) {
+
+        if (empty($favourite)) {
             //insert
             ProductFavourite::create([
                 'customer_id' => Auth::user()->customer_id,
@@ -183,8 +201,7 @@ class ProductController extends Controller
             ]);
 
             $product->product_favourite = 1;
-
-        }else{
+        } else {
             //delete
             $favourite->delete();
 

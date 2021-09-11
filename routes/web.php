@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\MessageEvent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+
+    broadcast(new MessageEvent(['message' => 'Hello websocket']));
+
     return view('welcome');
 });
+
+Route::get('chat/{message}', [\App\Http\Controllers\ChatController::class, 'chat']);
